@@ -1,0 +1,105 @@
+public class Arrival {
+    public static void main(String[] args){
+        
+        //if 4 inputs
+        if (args.length == 4){
+            
+            //create array with four spots
+            int[] values = new int[4];
+
+            boolean isNegative = false;
+            //fill it with inputs - if any input neg, set isNegative true and leave loop
+            for (int i = 0; i < 4; i++){
+                values[i] = Integer.parseInt(args[i]);
+                if (values[i] < 0){
+                    isNegative = true;
+                    break;
+                }
+            }
+
+            if (values[2] < 1 || values [3] < 1) isNegative = true; 
+           
+            //if isNegative true - print error
+            if (isNegative == true){
+                System.out.println("Please specify four positive integers");
+            }
+    
+            //if no negatives, then calculate arrival
+            else {
+
+                //check hour within 0-23 range
+                if (values[0] < 0 || values[0] > 23){
+                    System.out.println("Please specify an hour between 0-23");
+                }
+                else {
+                    //check minutes within 0-59 range
+                    if (values[1] < 0 || values[0] > 59){
+                        System.out.println("Please specify a minute between 0-59");
+                    }
+                    else {
+                        arrivalcalc(values);
+                    }
+                }
+            }
+        }
+
+        //if not 4 inputs - print error
+        else {
+            System.out.println("Please specify four positive integers");
+        }
+
+    }
+
+    public static void arrivalcalc(int[] values){
+        
+        //current hour in minutes
+        int inputtominutes = values[0]*60;
+        inputtominutes += values[1];
+        
+        //whole hours traveled
+        int wholehours = values[2]/values[3];
+        
+        //convert whole hours to min
+        if (wholehours != 0) {
+            inputtominutes += wholehours*60;
+        }
+
+        //if more than just whole hours
+        int unaccountedmiles = values[2]%values[3];
+        if (unaccountedmiles != 0){
+            float extraminutes = (float) unaccountedmiles/values[3];
+            extraminutes *= 60;
+            inputtominutes += Math.round(extraminutes); 
+        }
+
+        int hours = inputtominutes/60;
+        int minutes = inputtominutes%60;
+        
+        
+        //keeping the 0-23 hour format!
+        if (hours >=24){
+            int ratio = hours/24;
+            hours -= 24*ratio;
+        }
+
+        if (hours < 10) {
+            if (minutes < 10) {
+                System.out.printf("Arrival Time is 0%d:0%d\n", hours, minutes);
+            }
+            else {
+                System.out.printf("Arrival Time is 0%d:%d\n", hours, minutes);
+
+            }
+        }
+       
+        else {
+            if (minutes < 10) {
+                System.out.printf("Arrival Time is %d:0%d\n", hours, minutes);
+            }
+            else {
+                System.out.printf("Arrival Time is %d:%d\n", hours, minutes);
+            }
+        }
+
+    }
+}
