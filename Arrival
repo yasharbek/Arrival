@@ -33,7 +33,7 @@ public class Arrival {
                 }
                 else {
                     //check minutes within 0-59 range
-                    if (values[1] < 0 || values[0] > 59){
+                    if (values[1] < 0 || values[1] > 59){
                         System.out.println("Please specify a minute between 0-59");
                     }
                     else {
